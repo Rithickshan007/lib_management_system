@@ -4,9 +4,9 @@ import psycopg2
 def dbconnection():
     return psycopg2.connect(
         host="localhost",
-        database="library",
+        database="library",  #Give your Database Name
         user="postgres",
-        password="Rithickshan"
+        password="Rithickshan" #Add Your Password Here(123456789)
     )
 #------------Class For Books
 class Books:
@@ -29,19 +29,37 @@ class Library:
         isbn=input("Enter the ISBN Number: ")
 
         query="""INSERT INTO BOOKS(name,author,year,isbn)
-        values(%s %s %s %s)
+        values(%s,%s,%s,%s)
         """
         self.cursor.execute(query,(title,author,year,isbn))
-        self.conn.commit
+        self.conn.commit()
+        print("Books Added Successfully")
+#-------------Displaying the Books that is Added
+    def displayBooks(self):
+        query="""SELECT * FROM BOOKS"""
+        self.cursor.execute(query)
+        books=self.cursor.fetchall()
+        if not books:
+            print("No Books are Found....")
+        for b in books:
+            print(f"""
+Title: {b[0]}
+Author: {b[1]}
+Year: {b[2]}
+ISBN: {b[3]}""")
+
 def menu():
     lib=Library()
     while(True):
         print("1.Add Books to library...")
-        print("2.Exit")
+        print("2.Display the Books Available...")
+        print("3.Exit")
         choice=int(input("Enter your Choice: "))
         if(choice==1):
             lib.addBooks()
         elif(choice==2):
+            lib.displayBooks()
+        elif(choice==3):
             break
 
 if __name__ == "__main__":
