@@ -49,10 +49,10 @@ Year: {b[2]}
 ISBN: {b[3]}""")
 #-------------------Updating the Books by ID
     def updateBooks(self):
-        book_id=int(input("Enter the Book ID to Update: "))
-        year=int(input("Enter the New Year to Update"))
-        query="UPDATE  BOOKS SET year=%s WHERE ID=%s"
-        self.cursor.execute(query,(book_id,year))
+        book_id=input("Enter the ISBN to Update: ")
+        year=input("Enter the New Year to Update: ")
+        query="UPDATE  BOOKS SET year=%s WHERE isbn=%s"
+        self.cursor.execute(query,(year,book_id))
         self.conn.commit()
         if self.cursor.rowcount:
             print("The Books is Updated Successfully")
@@ -60,9 +60,9 @@ ISBN: {b[3]}""")
             print("The Books is Not Found")
 #-----------------------Deleting the Books
     def deleteBooks(self):
-        book_id=int(input ("Enter the Books ID to Delete: "))
+        book_id=input ("Enter the Books ID to Delete: ")
         query="DELETE FROM BOOKS WHERE id=%s"
-        self.cursor.execute(query,(book_id))
+        self.cursor.execute(query,(book_id,))
         self.conn.commit()
         if self.cursor.rowcount:
             print("The Books is Deleted Successfully")
@@ -75,13 +75,19 @@ def menu():
     while(True):
         print("1.Add Books to library...")
         print("2.Display the Books Available...")
-        print("3.Exit")
+        print("3.Update the Books....")
+        print("4.Delete the Books")
+        print("5.Exit")
         choice=int(input("Enter your Choice: "))
         if(choice==1):
             lib.addBooks()
         elif(choice==2):
             lib.displayBooks()
         elif(choice==3):
+            lib.updateBooks()
+        elif(choice==4):
+            lib.deleteBooks()
+        elif(choice==5):
             break
 
 if __name__ == "__main__":
