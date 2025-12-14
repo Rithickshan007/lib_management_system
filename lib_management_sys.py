@@ -47,6 +47,28 @@ Title: {b[0]}
 Author: {b[1]}
 Year: {b[2]}
 ISBN: {b[3]}""")
+#-------------------Updating the Books by ID
+    def updateBooks(self):
+        book_id=int(input("Enter the Book ID to Update: "))
+        year=int(input("Enter the New Year to Update"))
+        query="UPDATE  BOOKS SET year=%s WHERE ID=%s"
+        self.cursor.execute(query,(book_id,year))
+        self.conn.commit()
+        if self.cursor.rowcount:
+            print("The Books is Updated Successfully")
+        else:
+            print("The Books is Not Found")
+#-----------------------Deleting the Books
+    def deleteBooks(self):
+        book_id=int(input ("Enter the Books ID to Delete: "))
+        query="DELETE FROM BOOKS WHERE id=%s"
+        self.cursor.execute(query,(book_id))
+        self.conn.commit()
+        if self.cursor.rowcount:
+            print("The Books is Deleted Successfully")
+        else:
+            print("No Books Not Found")
+ #--------------------The Main Menu for accessing all the Functions       
 
 def menu():
     lib=Library()
